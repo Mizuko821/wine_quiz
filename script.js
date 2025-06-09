@@ -81,6 +81,7 @@ const choicesElement = document.getElementById('choices');
 const feedbackElement = document.getElementById('feedback');
 const nextButton = document.getElementById('next-button');
 const progressElement = document.getElementById('progress');
+const scoreDisplayElement = document.getElementById('score-display');
 
 let currentQuizIndex = 0;
 let correctAnswers = 0;
@@ -137,6 +138,7 @@ function nextQuestion() {
 // 進捗状況を更新する関数
 function updateProgress() {
   progressElement.textContent = `問題 ${currentQuizIndex + 1}/${quizData.length}`;
+  scoreDisplayElement.textContent = `正解: ${correctAnswers} / ${currentQuizIndex} 問`;
 }
 
 // イベントリスナー
