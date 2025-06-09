@@ -1,0 +1,149 @@
+:root {
+    --wine-red: #722f37;
+    --wine-dark: #4a1f24;
+    --wine-light: #b44d5a;
+    --gold: #d4af37;
+    --cream: #f5f5dc;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--cream);
+    color: var(--wine-dark);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: var(--wine-red);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.quiz-container {
+    margin-bottom: 2rem;
+}
+
+.question {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--wine-dark);
+    font-weight: 500;
+}
+
+.options {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.option {
+    background: white;
+    border: 2px solid var(--wine-light);
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.option:hover {
+    background: var(--wine-light);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.option.selected {
+    background: var(--wine-red);
+    color: white;
+    border-color: var(--wine-red);
+}
+
+.option.correct {
+    background: #2e7d32;
+    color: white;
+    border-color: #2e7d32;
+}
+
+.option.incorrect {
+    background: #c62828;
+    color: white;
+    border-color: #c62828;
+}
+
+button {
+    background: var(--wine-red);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 0 auto;
+}
+
+button:hover {
+    background: var(--wine-dark);
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.result {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.score {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    color: var(--wine-red);
+    font-weight: 700;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .question {
+        font-size: 1.1rem;
+    }
+
+    button {
+        width: 100%;
+    }
+} 
