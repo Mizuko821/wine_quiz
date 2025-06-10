@@ -7,6 +7,28 @@ let allAocs;
 // 全ての格付けを取得
 let allClassifications;
 
+// 画面要素の取得
+const startScreen = document.getElementById('start-screen');
+const quizScreen = document.getElementById('quiz-screen');
+const resultScreen = document.getElementById('result-screen');
+const questionCountSelect = document.getElementById('question-count');
+const startButton = document.getElementById('start-button');
+const backToStartButton = document.getElementById('back-to-start');
+const restartButton = document.getElementById('restart-button');
+
+// クイズ関連の要素
+const questionElement = document.getElementById('question');
+const choicesElement = document.getElementById('choices');
+const feedbackElement = document.getElementById('feedback');
+const nextButton = document.getElementById('next-button');
+const progressElement = document.getElementById('progress');
+const scoreDisplayElement = document.getElementById('score-display');
+const finalScoreElement = document.getElementById('final-score');
+
+let currentQuizIndex = 0;
+let correctAnswers = 0;
+let quizData;
+
 // シャトー名を問う問題を生成
 function generateNameQuestions() {
   return chateauxData.chateaux.map(chateau => {
@@ -78,19 +100,26 @@ function generateClassificationQuestions() {
   });
 }
 
-// 全てのクイズを生成
-let quizData;
+// クイズを初期化する関数
+function initializeQuiz() {
+  currentQuizIndex = 0;
+  correctAnswers = 0;
+  
+  // 問題数を取得
+  const questionCount = questionCountSelect.value;
+  const allQuestions = [
+    ...generateNameQuestions(),
+    ...generateAocQuestions(),
+    ...generateClassificationQuestions()
+  ].sort(() => Math.random() - 0.5);
 
-// HTML要素の取得
-const questionElement = document.getElementById('question');
-const choicesElement = document.getElementById('choices');
-const feedbackElement = document.getElementById('feedback');
-const nextButton = document.getElementById('next-button');
-const progressElement = document.getElementById('progress');
-const scoreDisplayElement = document.getElementById('score-display');
+  // 問題数を制限
+  quizData = questionCount === 'all' 
+    ? allQuestions 
+    : allQuestions.slice(0, parseInt(questionCount));
 
-let currentQuizIndex = 0;
-let correctAnswers = 0;
+  showQuiz();
+}
 
 // クイズを表示する関数
 function showQuiz() {
@@ -106,14 +135,18 @@ function showQuiz() {
       choicesElement.appendChild(button);
     });
     feedbackElement.textContent = '';
-    nextButton.style.display = 'none'; // 「次の問題へ」ボタンを非表示
+    nextButton.style.display = 'none';
     updateProgress();
   } else {
-    questionElement.textContent = 'クイズ完了！';
-    choicesElement.innerHTML = '';
-    feedbackElement.textContent = `全${quizData.length}問中、${correctAnswers}問正解しました！`;
-    nextButton.style.display = 'none'; // 「次の問題へ」ボタンを非表示
+    showResult();
   }
+}
+
+// 結果画面を表示する関数
+function showResult() {
+  quizScreen.style.display = 'none';
+  resultScreen.style.display = 'block';
+  finalScoreElement.textContent = `全${quizData.length}問中、${correctAnswers}問正解しました！`;
 }
 
 // 回答をチェックする関数
@@ -132,7 +165,7 @@ function checkAnswer(selectedChoice, correctAnswer) {
     button.disabled = true;
   });
 
-  nextButton.style.display = 'block'; // 「次の問題へ」ボタンを表示
+  nextButton.style.display = 'block';
 }
 
 // 次の問題へ進む関数
@@ -147,22 +180,34 @@ function updateProgress() {
   scoreDisplayElement.textContent = `正解: ${correctAnswers} / ${currentQuizIndex} 問`;
 }
 
+// 画面遷移の関数
+function showStartScreen() {
+  startScreen.style.display = 'block';
+  quizScreen.style.display = 'none';
+  resultScreen.style.display = 'none';
+}
+
+function showQuizScreen() {
+  startScreen.style.display = 'none';
+  quizScreen.style.display = 'block';
+  resultScreen.style.display = 'none';
+  initializeQuiz();
+}
+
 // イベントリスナー
+startButton.addEventListener('click', showQuizScreen);
+backToStartButton.addEventListener('click', showStartScreen);
+restartButton.addEventListener('click', showStartScreen);
 nextButton.addEventListener('click', nextQuestion);
 
-// JSONファイルからデータを読み込んでクイズを初期化
+// JSONファイルからデータを読み込んで初期化
 fetch('chateaux.json')
   .then(response => response.json())
   .then(data => {
     chateauxData = data;
     allAocs = Array.from(new Set(chateauxData.chateaux.map(c => c.aoc)));
     allClassifications = Array.from(new Set(chateauxData.chateaux.map(c => c.classification)));
-    quizData = [
-      ...generateNameQuestions(),
-      ...generateAocQuestions(),
-      ...generateClassificationQuestions()
-    ].sort(() => Math.random() - 0.5);
-    showQuiz();
+    showStartScreen();
   })
   .catch(error => {
     console.error('Error loading chateaux data:', error);

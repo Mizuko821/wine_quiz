@@ -2,26 +2,44 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>ボルドー格付けクイズ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ボルドーワイン格付けクイズ</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="quiz-container">
-        <p id="progress"></p>
-        <div id="score-display"></div>
-
-        <h2 id="question"></h2>
-        <div id="choices">
-            <button class="choice-btn"></button>
-            <button class="choice-btn"></button>
-            <button class="choice-btn"></button>
-            <button class="choice-btn"></button>
+    <div id="start-screen" class="screen">
+        <h1>ボルドーワイン格付けクイズ</h1>
+        <div class="question-count">
+            <label for="question-count">問題数：</label>
+            <select id="question-count">
+                <option value="5">5問</option>
+                <option value="10" selected>10問</option>
+                <option value="20">20問</option>
+                <option value="30">30問</option>
+                <option value="40">40問</option>
+                <option value="50">50問</option>
+                <option value="all">全問</option>
+            </select>
         </div>
-
-        <p id="feedback"></p>
-
-        <button id="next-button">次の問題へ</button>
+        <button id="start-button">クイズスタート</button>
     </div>
+
+    <div id="quiz-screen" class="screen" style="display: none;">
+        <div id="progress"></div>
+        <div id="score-display"></div>
+        <div id="question"></div>
+        <div id="choices"></div>
+        <div id="feedback"></div>
+        <button id="next-button" style="display: none;">次の問題へ</button>
+        <button id="back-to-start">スタートに戻る</button>
+    </div>
+
+    <div id="result-screen" class="screen" style="display: none;">
+        <h2>クイズ結果</h2>
+        <div id="final-score"></div>
+        <button id="restart-button">スタートに戻る</button>
+    </div>
+
     <script type="module" src="script.js"></script>
 </body>
 </html>
