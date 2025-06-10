@@ -1,6 +1,6 @@
 :root {
-    --wine-red: #722f37;
-    --wine-dark: #4a1f24;
+    --wine-red: #8D1D2C;
+    --wine-dark: #5A0F1B;
     --wine-light: #b44d5a;
     --gold: #d4af37;
     --cream: #f5f5dc;
@@ -85,27 +85,32 @@ select:hover {
 }
 
 #choices {
-    display: grid;
-    gap: 1rem;
+    display: flex;
+    flex-direction: column; /* 縦一列に並べる */
+    gap: 0.8rem; /* ボタン間の縦方向の間隔 */
     margin-bottom: 1.5rem;
 }
 
 .choice-button {
-    background: white;
-    border: 2px solid var(--wine-light);
-    padding: 1rem;
+    background: var(--wine-dark);
+    border: 2px solid var(--wine-dark);
+    padding: 1.2rem;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 1.1rem;
-    color: var(--wine-dark);
+    font-size: 1.2rem;
+    color: white;
     text-align: left;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    width: 100%; /* 親要素の幅いっぱいに広がる */
+    margin: 0; /* 親のgapで間隔を制御するためマージンを0に */
 }
 
 .choice-button:hover {
-    background: var(--wine-light);
+    background: var(--wine-red);
     color: white;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .choice-button:disabled {
@@ -114,6 +119,7 @@ select:hover {
     color: #666;
     cursor: not-allowed;
     transform: none;
+    box-shadow: none;
 }
 
 #feedback {
@@ -124,22 +130,98 @@ select:hover {
     min-height: 2rem;
 }
 
+/* クイズ画面のボタンコンテナ */
+.quiz-control-buttons {
+    display: flex;
+    justify-content: space-between; /* 両端に配置するように変更 */
+    align-items: center;
+    margin-top: 1.5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    height: 55px;
+}
+
+.quiz-action-buttons {
+    position: relative;
+    min-width: 0;
+    width: calc(50% - 0.5rem);
+    height: 100%;
+    order: 2; /* スキップボタンを右側に配置 */
+}
+
+#back-to-start {
+    order: 1; /* スタートに戻るボタンを左側に配置 */
+}
+
+.quiz-action-buttons button {
+    position: absolute; /* 子要素を絶対配置に設定 */
+    top: 0;
+    left: 0;
+    width: 100%; /* 親の幅に合わせる */
+    height: 100%; /* 親の高さに合わせる */
+    margin: 0; /* 個別のマージンは0にする */
+    display: flex; /* テキストを中央揃えにするため */
+    justify-content: center; /* 水平方向の中央揃え */
+    align-items: center; /* 垂直方向の中央揃え */
+    transform: none; /* 以前のtransformを解除 */
+}
+
+/* 共通のボタン基本スタイル */
 button {
-    background: var(--wine-red);
     color: white;
-    border: none;
     padding: 1rem 2rem;
     border-radius: 8px;
     cursor: pointer;
     font-size: 1.1rem;
     transition: all 0.3s ease;
-    display: block;
-    margin: 1rem auto;
-    min-width: 200px;
 }
 
-button:hover {
+/* スタートボタンのスタイル */
+#start-button {
+    display: block;
+    margin: 1rem auto;
+    min-width: 200px; /* スタートボタンは固定の最小幅を維持 */
+}
+
+/* スタートに戻るボタンのスタイル */
+#back-to-start, #restart-button {
+    background: #aaaaaa;
+    border: 2px solid #aaaaaa;
+    margin: 0; /* 親のflexboxでレイアウトするためマージンを0に */
+    min-width: 0; /* Flexアイテムとして柔軟に縮小できるようにする */
+    width: calc(50% - 0.5rem); /* 親の幅の半分からgapの半分を引く */
+    display: flex; /* テキスト中央揃えのため追加 */
+    justify-content: center; /* テキスト水平方向中央揃えのため追加 */
+    align-items: center; /* テキスト垂直方向中央揃えのため追加 */
+}
+
+#back-to-start:hover, #restart-button:hover {
+    background: #666666;
+    border-color: #666666;
+    transform: translateY(-2px);
+}
+
+/* 通常のボタン（次の問題へ、クイズスタート） */
+button:not(#back-to-start):not(#restart-button):not(#skip-button) {
+    background: var(--wine-red);
+    border: 2px solid var(--wine-red);
+}
+
+button:not(#back-to-start):not(#restart-button):not(#skip-button):hover {
     background: var(--wine-dark);
+    border-color: var(--wine-dark);
+    transform: translateY(-2px);
+}
+
+#skip-button {
+    background: #ffa500; /* スキップボタンの色（オレンジ） */
+    border: 2px solid #ffa500;
+    color: white;
+}
+
+#skip-button:hover {
+    background: #cc8400; /* ホバー時の色を少し濃く */
+    border-color: #cc8400;
     transform: translateY(-2px);
 }
 
@@ -162,6 +244,16 @@ button:disabled {
     font-size: 1.5rem;
     color: var(--wine-red);
     font-weight: 700;
+}
+
+#result-screen {
+    text-align: center;
+}
+
+#restart-button {
+    margin: 2rem auto;
+    display: block;
+    min-width: 200px;
 }
 
 @media (max-width: 600px) {
@@ -187,12 +279,39 @@ button:disabled {
     }
 
     .choice-button {
-        font-size: 1rem;
-        padding: 0.8rem;
+        width: 100%;
+    }
+
+    /* スマホでのボタンの配置を調整 */
+    .quiz-control-buttons {
+        flex-direction: column; /* 縦並び */
+        align-items: stretch; /* 幅いっぱいに広げる */
+        height: auto; /* 高さを自動調整 */
+        justify-content: center; /* スマホでは中央寄せ */
+    }
+
+    .quiz-action-buttons {
+        width: 100%; /* 親の幅いっぱいに */
+        min-width: unset; /* 最小幅を解除 */
+        height: 55px; /* Fixed height for mobile too */
+        display: flex; /* Flexコンテナとして定義 */
+        flex-direction: column; /* 内部のボタンを縦に並べる */
+        gap: 0.5rem; /* 内部ボタン間の間隔 */
+    }
+
+    .quiz-action-buttons button {
+        position: static; /* 絶対配置を解除 */
+        transform: none; /* transformを解除 */
+        width: 100%; /* スマホでは幅100% */
+        margin: 0; /* スマホでもマージン0で親のflexboxに合わせる */
+        display: flex; /* テキスト中央揃え */
+        justify-content: center; /* 水平方向中央揃え */
+        align-items: center; /* 垂直方向中央揃え */
     }
 
     button {
         width: 100%;
-        min-width: unset;
+        min-width: unset; /* スマホではmin-widthを解除 */
+        margin: 0 auto; /* スマホでも中央揃えできるように維持 */
     }
 } 
