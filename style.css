@@ -4,6 +4,7 @@
     --wine-light: #b44d5a;
     --gold: #d4af37;
     --cream: #f5f5dc;
+    --glass-bg: rgba(255, 255, 255, 0.9);
 }
 
 * {
@@ -14,7 +15,9 @@
 
 body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: var(--cream);
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('henri-guerin-P3S3oW6liSk-unsplash.jpg') no-repeat center center fixed;
+    background-size: cover;
     color: var(--wine-dark);
     line-height: 1.6;
     min-height: 100vh;
@@ -24,16 +27,24 @@ body {
     padding: 2rem;
 }
 
-.container {
+.screen {
     max-width: 800px;
     width: 100%;
-    background: white;
+    background: var(--glass-bg);
     padding: 2rem;
     border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    margin: 2rem 0;
+    animation: fadeIn 0.5s ease-in;
 }
 
-h1 {
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1, h2 {
     color: var(--wine-red);
     text-align: center;
     margin-bottom: 2rem;
@@ -41,54 +52,76 @@ h1 {
     font-weight: 700;
 }
 
-.quiz-container {
+h2 {
+    font-size: 2rem;
+}
+
+.question-count {
+    text-align: center;
     margin-bottom: 2rem;
 }
 
-.question {
-    font-size: 1.2rem;
+select {
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--wine-light);
+    border-radius: 8px;
+    font-size: 1.1rem;
+    color: var(--wine-dark);
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+select:hover {
+    border-color: var(--wine-red);
+}
+
+#question {
+    font-size: 1.3rem;
     margin-bottom: 1.5rem;
     color: var(--wine-dark);
     font-weight: 500;
+    text-align: center;
 }
 
-.options {
+#choices {
     display: grid;
     gap: 1rem;
     margin-bottom: 1.5rem;
 }
 
-.option {
+.choice-button {
     background: white;
     border: 2px solid var(--wine-light);
     padding: 1rem;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-size: 1.1rem;
+    color: var(--wine-dark);
+    text-align: left;
 }
 
-.option:hover {
+.choice-button:hover {
     background: var(--wine-light);
     color: white;
     transform: translateY(-2px);
 }
 
-.option.selected {
-    background: var(--wine-red);
-    color: white;
-    border-color: var(--wine-red);
+.choice-button:disabled {
+    background: #ccc;
+    border-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    transform: none;
 }
 
-.option.correct {
-    background: #2e7d32;
-    color: white;
-    border-color: #2e7d32;
-}
-
-.option.incorrect {
-    background: #c62828;
-    color: white;
-    border-color: #c62828;
+#feedback {
+    text-align: center;
+    margin: 1rem 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+    min-height: 2rem;
 }
 
 button {
@@ -101,7 +134,8 @@ button {
     font-size: 1.1rem;
     transition: all 0.3s ease;
     display: block;
-    margin: 0 auto;
+    margin: 1rem auto;
+    min-width: 200px;
 }
 
 button:hover {
@@ -109,43 +143,56 @@ button:hover {
     transform: translateY(-2px);
 }
 
-
-
 button:disabled {
     background: #ccc;
     cursor: not-allowed;
     transform: none;
 }
 
-.result {
+#progress, #score-display {
     text-align: center;
-    margin-top: 1rem;
-    font-size: 1.2rem;
-    font-weight: 500;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: var(--wine-dark);
 }
 
-.score {
+#final-score {
     text-align: center;
-    margin-top: 1rem;
+    margin: 2rem 0;
     font-size: 1.5rem;
     color: var(--wine-red);
     font-weight: 700;
 }
 
 @media (max-width: 600px) {
-    .container {
+    body {
         padding: 1rem;
+    }
+
+    .screen {
+        padding: 1.5rem;
+        margin: 1rem 0;
     }
 
     h1 {
         font-size: 2rem;
     }
 
-    .question {
-        font-size: 1.1rem;
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    #question {
+        font-size: 1.2rem;
+    }
+
+    .choice-button {
+        font-size: 1rem;
+        padding: 0.8rem;
     }
 
     button {
         width: 100%;
+        min-width: unset;
     }
 } 
