@@ -15,6 +15,7 @@ const questionCountSelect = document.getElementById('question-count');
 const startButton = document.getElementById('start-button');
 const backToStartButton = document.getElementById('back-to-start');
 const restartButton = document.getElementById('restart-button');
+const skipButton = document.getElementById('skip-button');
 
 // クイズ関連の要素
 const questionElement = document.getElementById('question');
@@ -136,6 +137,7 @@ function showQuiz() {
     });
     feedbackElement.textContent = '';
     nextButton.style.display = 'none';
+    skipButton.style.display = 'block';
     updateProgress();
   } else {
     showResult();
@@ -166,12 +168,28 @@ function checkAnswer(selectedChoice, correctAnswer) {
   });
 
   nextButton.style.display = 'block';
+  skipButton.style.display = 'none';
 }
 
 // 次の問題へ進む関数
 function nextQuestion() {
   currentQuizIndex++;
   showQuiz();
+}
+
+// スキップする関数 (不正解扱い)
+function skipQuestion() {
+  const currentQuiz = quizData[currentQuizIndex];
+  feedbackElement.textContent = `スキップされました。正解は ${currentQuiz.answer} です。`;
+  feedbackElement.style.color = 'red'; // スキップ時の色を赤色に変更
+
+  // 全ての選択肢ボタンを無効化
+  Array.from(choicesElement.children).forEach(button => {
+    button.disabled = true;
+  });
+
+  nextButton.style.display = 'block';
+  skipButton.style.display = 'none';
 }
 
 // 進捗状況を更新する関数
@@ -199,6 +217,7 @@ startButton.addEventListener('click', showQuizScreen);
 backToStartButton.addEventListener('click', showStartScreen);
 restartButton.addEventListener('click', showStartScreen);
 nextButton.addEventListener('click', nextQuestion);
+skipButton.addEventListener('click', skipQuestion);
 
 // JSONファイルからデータを読み込んで初期化
 fetch('chateaux.json')

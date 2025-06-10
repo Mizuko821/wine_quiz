@@ -12,8 +12,8 @@
         <div class="question-count">
             <label for="question-count">問題数：</label>
             <select id="question-count">
-                <option value="5">5問</option>
-                <option value="10" selected>10問</option>
+                <option value="5" selected>5問</option>
+                <option value="10">10問</option>
                 <option value="20">20問</option>
                 <option value="30">30問</option>
                 <option value="40">40問</option>
@@ -30,8 +30,13 @@
         <div id="question"></div>
         <div id="choices"></div>
         <div id="feedback"></div>
-        <button id="next-button" style="display: none;">次の問題へ</button>
-        <button id="back-to-start">スタートに戻る</button>
+        <div class="quiz-control-buttons">
+            <div class="quiz-action-buttons">
+                <button id="skip-button">スキップ</button>
+                <button id="next-button" style="display: none;">次の問題へ</button>
+            </div>
+            <button id="back-to-start">スタートに戻る</button>
+        </div>
     </div>
 
     <div id="result-screen" class="screen" style="display: none;">
