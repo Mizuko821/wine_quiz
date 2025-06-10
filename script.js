@@ -76,9 +76,9 @@ function generateClassificationQuestions() {
 let quizData;
 
 // HTML要素の取得
-const questionElement = document.getElementById('question');
-const choicesElement = document.getElementById('choices');
-const feedbackElement = document.getElementById('feedback');
+  const questionElement = document.getElementById('question');
+  const choicesElement = document.getElementById('choices');
+  const feedbackElement = document.getElementById('feedback');
 const nextButton = document.getElementById('next-button');
 const progressElement = document.getElementById('progress');
 const scoreDisplayElement = document.getElementById('score-display');
@@ -89,15 +89,15 @@ let correctAnswers = 0;
 // クイズを表示する関数
 function showQuiz() {
   if (currentQuizIndex < quizData.length) {
-    const currentQuiz = quizData[currentQuizIndex];
+  const currentQuiz = quizData[currentQuizIndex];
     questionElement.textContent = currentQuiz.question;
     choicesElement.innerHTML = '';
-    currentQuiz.choices.forEach(choice => {
-      const button = document.createElement('button');
-      button.textContent = choice;
+  currentQuiz.choices.forEach(choice => {
+    const button = document.createElement('button');
+    button.textContent = choice;
       button.classList.add('choice-button');
       button.addEventListener('click', () => checkAnswer(choice, currentQuiz.answer));
-      choicesElement.appendChild(button);
+    choicesElement.appendChild(button);
     });
     feedbackElement.textContent = '';
     nextButton.style.display = 'none'; // 「次の問題へ」ボタンを非表示
@@ -112,15 +112,15 @@ function showQuiz() {
 
 // 回答をチェックする関数
 function checkAnswer(selectedChoice, correctAnswer) {
-  if (selectedChoice === correctAnswer) {
+    if (selectedChoice === correctAnswer) {
     feedbackElement.textContent = '正解！';
-    feedbackElement.style.color = 'green';
+      feedbackElement.style.color = 'green';
     correctAnswers++;
-  } else {
+    } else {
     feedbackElement.textContent = `不正解！正解は ${correctAnswer} です。`;
-    feedbackElement.style.color = 'red';
-  }
-  
+      feedbackElement.style.color = 'red';
+    }
+    
   // 全ての選択肢ボタンを無効化
   Array.from(choicesElement.children).forEach(button => {
     button.disabled = true;
