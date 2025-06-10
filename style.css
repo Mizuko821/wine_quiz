@@ -284,34 +284,47 @@ button:disabled {
 
     /* スマホでのボタンの配置を調整 */
     .quiz-control-buttons {
-        flex-direction: column; /* 縦並び */
-        align-items: stretch; /* 幅いっぱいに広げる */
-        height: auto; /* 高さを自動調整 */
-        justify-content: center; /* スマホでは中央寄せ */
+        flex-direction: column;
+        align-items: stretch;
+        height: auto;
+        justify-content: center;
     }
 
     .quiz-action-buttons {
-        width: 100%; /* 親の幅いっぱいに */
-        min-width: unset; /* 最小幅を解除 */
-        height: 55px; /* Fixed height for mobile too */
-        display: flex; /* Flexコンテナとして定義 */
-        flex-direction: column; /* 内部のボタンを縦に並べる */
-        gap: 0.5rem; /* 内部ボタン間の間隔 */
+        width: 100%;
+        min-width: unset;
+        height: 55px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
     }
 
     .quiz-action-buttons button {
-        position: static; /* 絶対配置を解除 */
-        transform: none; /* transformを解除 */
-        width: 100%; /* スマホでは幅100% */
-        margin: 0; /* スマホでもマージン0で親のflexboxに合わせる */
-        display: flex; /* テキスト中央揃え */
-        justify-content: center; /* 水平方向中央揃え */
-        align-items: center; /* 垂直方向中央揃え */
+        position: static;
+        transform: none;
+        width: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     button {
         width: 100%;
-        min-width: unset; /* スマホではmin-widthを解除 */
-        margin: 0 auto; /* スマホでも中央揃えできるように維持 */
+        min-width: unset;
+        margin: 0 auto;
+    }
+
+    /* スタートに戻るボタンのモバイル対応 */
+    #back-to-start {
+        width: 100%;
+        margin: 0.5rem 0;
+        order: 1;
+    }
+
+    /* 結果画面のボタンもモバイル対応 */
+    #restart-button {
+        width: 100%;
+        margin: 1rem 0;
     }
 } 
