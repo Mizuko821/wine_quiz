@@ -1,15 +1,36 @@
 {
   "name": "wine-quiz-app",
   "version": "1.0.0",
-  "description": "A simple wine quiz application.",
+  "type": "module",
   "main": "script.js",
+  "directories": {
+    "doc": "docs"
+  },
   "scripts": {
-    "serve": "http-server . -p 8080"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mizuko821/wine_quiz.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mizuko821/wine_quiz/issues"
+  },
+  "homepage": "https://github.com/Mizuko821/wine_quiz#readme",
+  "description": "",
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "@types/node": "^24.0.1",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@aws-amplify/cli": "^12.10.0",
+    "@aws-amplify/ui-react": "^5.3.0"
   }
 }
