@@ -1,0 +1,62 @@
+# 会話履歴 v1.0.0
+
+### プロジェクトの概要確認
+- メドック格付けクイズアプリケーション
+- AWS Amplifyでデプロイ
+  - developブランチ: 手動デプロイ
+  - mainブランチ: 自動デプロイ
+
+### ブランチ運用の確認と改善
+- 現在の運用
+  - main: 本番環境用（自動デプロイ）
+  - develop: 開発環境用（手動デプロイ）
+  - feature/*: 機能開発用
+
+- 推奨される作業フロー
+  1. 作業開始時
+     ```bash
+     # 状態確認
+     git status
+     
+     # developの最新状態に更新
+     git pull origin develop
+     
+     # 新しい作業ブランチを作成
+     git checkout -b feature/作業内容
+     ```
+
+  2. 作業完了後
+     ```bash
+     # 変更をコミット
+     git add .
+     git commit -m "feat: 作業内容の説明"
+     
+     # developブランチにマージ
+     git checkout develop
+     git merge feature/作業内容
+     
+     # developをプッシュ
+     git push origin develop
+     
+     # 本番環境に反映する準備ができたら
+     git checkout main
+     git merge develop
+     git push origin main
+     ```
+
+### Gitの基本操作の確認
+- `git pull`の動作
+  - リモート（GitHub）からローカルへの更新
+  - `git fetch` + `git merge`の組み合わせ
+  - 常に最新の状態から作業を始めることが重要
+
+- エラー対応
+  - non-fast-forwardエラー
+    - 原因: リモートとローカルで履歴が分岐
+    - 解決: `git pull`で最新状態を取り込んでから作業
+
+### 今後の方針
+- developブランチを中心に開発を進める
+- 機能開発はfeatureブランチで行う
+- 十分なテスト後にmainにマージ
+- 重要な決定事項はREADME.mdやドキュメントに記録 
