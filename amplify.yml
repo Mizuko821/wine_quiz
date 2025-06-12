@@ -3,10 +3,13 @@ frontend:
   phases:
     preBuild:
       commands:
+        - sudo yum install -y git-lfs || true
+        - git lfs install
+        - git lfs pull
         - npm install
     build:
       commands:
-        - echo "No specific build command needed for this static site."
+        - echo "Static site build complete."
   artifacts:
     baseDirectory: ./
     files:
