@@ -1,0 +1,26 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install
+    build:
+      commands:
+        - echo "No specific build command needed for this static site."
+  artifacts:
+    baseDirectory: ./
+    files:
+      - '**/*'
+      - '!node_modules/**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+  customHeaders:
+    - pattern: '**/*'
+      headers:
+        - key: 'Cache-Control'
+          value: 'max-age=0, no-cache, no-store, must-revalidate'
+        - key: 'Pragma'
+          value: 'no-cache'
+        - key: 'Expires'
+          value: '0' 
