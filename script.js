@@ -347,4 +347,6 @@ function setupEventListeners() {
 }
 
 // データの読み込みを開始
-loadData();
+// loadData(); // この行は削除またはコメントアウト
+
+document.addEventListener('DOMContentLoaded', loadData); // DOMContentLoadedイベントが発火したらloadDataを呼び出す
