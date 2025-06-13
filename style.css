@@ -223,6 +223,19 @@ select:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.correct-explanation {
+    color: #2E7D32;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.other-explanation {
+    color: #666;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
 /* クイズ画面のボタンコンテナ */
 .quiz-control-buttons {
     display: flex;
@@ -397,6 +410,7 @@ button:disabled {
         width: 100%;
     }
 
+    
     /* スマホでのボタンの配置を調整 */
     .quiz-control-buttons {
         flex-direction: column;

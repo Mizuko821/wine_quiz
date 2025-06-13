@@ -230,39 +230,18 @@ function showExplanation() {
   let explanationText = '';
   switch (currentQuiz.type) {
     case 'name':
-      explanationText = `${originalChateau.name}は${originalChateau.aoc}の${originalChateau.classification}に属するシャトーです。\n\n`;
-      // 各選択肢の解説を追加
-      currentQuiz.choices.forEach(choice => {
-        const selectedChateau = chateauxData.chateaux.find(c => c.name === choice);
-        if (selectedChateau) {
-          explanationText += `${choice}は${selectedChateau.aoc}の${selectedChateau.classification}に属するシャトーです。\n`;
-        }
-      });
+      explanationText = `<span class="correct-explanation">${originalChateau.name}は${originalChateau.aoc}の${originalChateau.classification}に属するシャトーです。</span>`;
       break;
     case 'aoc':
-      explanationText = `${originalChateau.name}のAOCは${originalChateau.aoc}です。\n\n`;
-      // 各選択肢の解説を追加
-      currentQuiz.choices.forEach(choice => {
-        const chateauxInAoc = chateauxData.chateaux.filter(c => c.aoc === choice);
-        if (chateauxInAoc.length > 0) {
-          explanationText += `${choice}には${chateauxInAoc.length}つのシャトーがあり、その中には${chateauxInAoc[0].name}などがあります。\n`;
-        }
-      });
+      explanationText = `<span class="correct-explanation">${originalChateau.name}のAOCは${originalChateau.aoc}です。</span>`;
       break;
     case 'classification':
-      explanationText = `${originalChateau.name}の格付けは${originalChateau.classification}です。\n\n`;
-      // 各選択肢の解説を追加
-      currentQuiz.choices.forEach(choice => {
-        const chateauxInClass = chateauxData.chateaux.filter(c => c.classification === choice);
-        if (chateauxInClass.length > 0) {
-          explanationText += `${choice}には${chateauxInClass.length}つのシャトーがあり、その中には${chateauxInClass[0].name}などがあります。\n`;
-        }
-      });
+      explanationText = `<span class="correct-explanation">${originalChateau.name}の格付けは${originalChateau.classification}です。</span>`;
       break;
     default:
-      explanationText = `${currentQuiz.answer}に関する詳細な情報はこちらで確認できます。`;
+      explanationText = `<span class="correct-explanation">${currentQuiz.answer}に関する詳細な情報はこちらで確認できます。</span>`;
   }
-  explanationTextElement.textContent = explanationText;
+  explanationTextElement.innerHTML = explanationText;
 
   // 画面を切り替え
   quizScreen.style.display = 'none';
@@ -315,7 +294,7 @@ function updateProgress() {
   }
 }
 
-// 画面遷移の関数
+// スタート画面を表示する関数
 function showStartScreen() {
   startScreen.style.display = 'block';
   quizScreen.style.display = 'none';
@@ -323,6 +302,7 @@ function showStartScreen() {
   resultScreen.style.display = 'none';
 }
 
+// クイズ画面を表示する関数
 function showQuizScreen() {
   startScreen.style.display = 'none';
   quizScreen.style.display = 'block';
@@ -331,34 +311,35 @@ function showQuizScreen() {
   initializeQuiz();
 }
 
-// イベントリスナー
-startButton.addEventListener('click', showQuizScreen);
-backToStartButton.addEventListener('click', showStartScreen);
-restartButton.addEventListener('click', showStartScreen);
-nextButton.addEventListener('click', () => {
-  console.log("『次の問題へ』ボタン（クイズ画面）がクリックされました。");
-  nextQuestion();
-});
-skipButton.addEventListener('click', () => {
-  console.log("『スキップ』ボタンがクリックされました。");
-  skipQuestion();
-});
-explanationNextButton.addEventListener('click', () => {
-  console.log("『次の問題へ』ボタン（解説画面）がクリックされました。 currentQuizIndex: " + currentQuizIndex + ", quizData.length: " + quizData.length);
-  nextQuestionFromExplanation();
-});
-explanationBackToStartButton.addEventListener('click', showStartScreen);
+// データを読み込む
+async function loadData() {
+  try {
+    const response = await fetch('chateaux.json');
+    chateauxData = await response.json();
+    
+    // 全てのAOCを取得
+    allAocs = [...new Set(chateauxData.chateaux.map(chateau => chateau.aoc))];
+    
+    // 全ての格付けを取得
+    allClassifications = [...new Set(chateauxData.chateaux.map(chateau => chateau.classification))];
+    
+    // イベントリスナーを設定
+    setupEventListeners();
+  } catch (error) {
+    console.error('データの読み込みに失敗しました:', error);
+  }
+}
 
-// JSONファイルからデータを読み込んで初期化
-fetch('chateaux.json')
-  .then(response => response.json())
-  .then(data => {
-    chateauxData = data;
-    allAocs = Array.from(new Set(chateauxData.chateaux.map(c => c.aoc)));
-    allClassifications = Array.from(new Set(chateauxData.chateaux.map(c => c.classification)));
-    showStartScreen();
-  })
-  .catch(error => {
-    console.error('Error loading chateaux data:', error);
-    questionElement.textContent = 'データの読み込みに失敗しました。';
-  });
+// イベントリスナーを設定する関数
+function setupEventListeners() {
+  startButton.addEventListener('click', showQuizScreen);
+  backToStartButton.addEventListener('click', showStartScreen);
+  restartButton.addEventListener('click', showStartScreen);
+  skipButton.addEventListener('click', skipQuestion);
+  nextButton.addEventListener('click', nextQuestion);
+  explanationNextButton.addEventListener('click', nextQuestionFromExplanation);
+  explanationBackToStartButton.addEventListener('click', showStartScreen);
+}
+
+// データの読み込みを開始
+loadData();
