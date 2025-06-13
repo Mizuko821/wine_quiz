@@ -8,37 +8,37 @@ let allAocs;
 let allClassifications;
 
 // 画面要素の取得
-const startScreen = document.getElementById('start-screen');
-const quizScreen = document.getElementById('quiz-screen');
-const explanationScreen = document.getElementById('explanation-screen');
-const resultScreen = document.getElementById('result-screen');
-const questionCountSelect = document.getElementById('question-count');
-const startButton = document.getElementById('start-button');
-const backToStartButton = document.getElementById('back-to-start');
-const restartButton = document.getElementById('restart-button');
-const skipButton = document.getElementById('skip-button');
-const explanationNextButton = document.getElementById('explanation-next-button');
-const explanationBackToStartButton = document.getElementById('explanation-back-to-start');
+let startScreen;
+let quizScreen;
+let explanationScreen;
+let resultScreen;
+let questionCountSelect;
+let startButton;
+let backToStartButton;
+let restartButton;
+let skipButton;
+let explanationNextButton;
+let explanationBackToStartButton;
 
 // フィードバックコンテナを取得
-const feedbackContainer = document.getElementById('feedback-container');
+let feedbackContainer;
 
 // クイズ関連の要素
-const questionElement = document.getElementById('question');
-const choicesElement = document.getElementById('choices');
-const feedbackIconElement = document.getElementById('feedback-icon');
-const feedbackElement = document.getElementById('feedback');
-const nextButton = document.getElementById('next-button');
-const progressElement = document.getElementById('progress');
-const scoreDisplayElement = document.getElementById('score-display');
-const finalScoreElement = document.getElementById('final-score');
+let questionElement;
+let choicesElement;
+let feedbackIconElement;
+let feedbackElement;
+let nextButton;
+let progressElement;
+let scoreDisplayElement;
+let finalScoreElement;
 
 // 解説画面の要素
-const explanationProgressElement = document.getElementById('explanation-progress');
-const explanationScoreElement = document.getElementById('explanation-score');
-const explanationQuestionElement = document.getElementById('explanation-question');
-const explanationAnswerElement = document.getElementById('explanation-answer');
-const explanationTextElement = document.getElementById('explanation-text');
+let explanationProgressElement;
+let explanationScoreElement;
+let explanationQuestionElement;
+let explanationAnswerElement;
+let explanationTextElement;
 
 let currentQuizIndex = 0;
 let correctAnswers = 0;
@@ -337,6 +337,39 @@ async function loadData() {
 
 // イベントリスナーを設定する関数
 function setupEventListeners() {
+  // 画面要素の取得
+  startScreen = document.getElementById('start-screen');
+  quizScreen = document.getElementById('quiz-screen');
+  explanationScreen = document.getElementById('explanation-screen');
+  resultScreen = document.getElementById('result-screen');
+  questionCountSelect = document.getElementById('question-count');
+  startButton = document.getElementById('start-button');
+  backToStartButton = document.getElementById('back-to-start');
+  restartButton = document.getElementById('restart-button');
+  skipButton = document.getElementById('skip-button');
+  explanationNextButton = document.getElementById('explanation-next-button');
+  explanationBackToStartButton = document.getElementById('explanation-back-to-start');
+
+  // フィードバックコンテナを取得
+  feedbackContainer = document.getElementById('feedback-container');
+
+  // クイズ関連の要素
+  questionElement = document.getElementById('question');
+  choicesElement = document.getElementById('choices');
+  feedbackIconElement = document.getElementById('feedback-icon');
+  feedbackElement = document.getElementById('feedback');
+  nextButton = document.getElementById('next-button');
+  progressElement = document.getElementById('progress');
+  scoreDisplayElement = document.getElementById('score-display');
+  finalScoreElement = document.getElementById('final-score');
+
+  // 解説画面の要素
+  explanationProgressElement = document.getElementById('explanation-progress');
+  explanationScoreElement = document.getElementById('explanation-score');
+  explanationQuestionElement = document.getElementById('explanation-question');
+  explanationAnswerElement = document.getElementById('explanation-answer');
+  explanationTextElement = document.getElementById('explanation-text');
+
   startButton.addEventListener('click', showQuizScreen);
   backToStartButton.addEventListener('click', showStartScreen);
   restartButton.addEventListener('click', showStartScreen);
@@ -344,6 +377,7 @@ function setupEventListeners() {
   nextButton.addEventListener('click', nextQuestion);
   explanationNextButton.addEventListener('click', nextQuestionFromExplanation);
   explanationBackToStartButton.addEventListener('click', showStartScreen);
+  console.log('setupEventListeners called.'); // Debug log
 }
 
 // データの読み込みを開始
