@@ -123,6 +123,7 @@ function generateClassificationQuestions() {
 
 // クイズを初期化する関数
 function initializeQuiz() {
+  console.log('initializeQuiz called.'); // Debug log
   currentQuizIndex = 0;
   correctAnswers = 0;
   
@@ -138,12 +139,14 @@ function initializeQuiz() {
   quizData = questionCount === 'all' 
     ? allQuestions 
     : allQuestions.slice(0, parseInt(questionCount));
+  console.log('quizData generated:', quizData, 'length:', quizData.length); // Debug log
 
   showQuiz();
 }
 
 // クイズを表示する関数
 function showQuiz() {
+  console.log('showQuiz called.'); // Debug log
   quizScreen.style.display = 'block';
   explanationScreen.style.display = 'none';
 
@@ -152,20 +155,24 @@ function showQuiz() {
 
   if (currentQuizIndex < quizData.length) {
     const currentQuiz = quizData[currentQuizIndex];
+    console.log('currentQuiz:', currentQuiz); // Debug log
     questionElement.textContent = currentQuiz.question;
     choicesElement.innerHTML = '';
+    console.log('choicesElement cleared.'); // Debug log
     
     // フィードバック表示をリセット
     feedbackIconElement.textContent = '';
     feedbackIconElement.className = '';
     feedbackElement.textContent = '';
 
+    console.log('currentQuiz.choices:', currentQuiz.choices); // Debug log
     currentQuiz.choices.forEach(choice => {
       const button = document.createElement('button');
       button.textContent = choice;
       button.classList.add('choice-button');
       button.addEventListener('click', () => checkAnswer(choice, currentQuiz.answer));
       choicesElement.appendChild(button);
+      console.log('Button added:', choice); // Debug log
     });
     nextButton.style.display = 'none';
     skipButton.style.display = 'block';
