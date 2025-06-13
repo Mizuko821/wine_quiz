@@ -212,6 +212,7 @@ function checkAnswer(selectedChoice, correctAnswer) {
 
 // 次の問題へ進む関数
 function nextQuestion() {
+  currentQuizIndex++;
   showExplanation();
 }
 
@@ -251,13 +252,10 @@ function showExplanation() {
 // 解説画面から次の問題へ進む関数
 function nextQuestionFromExplanation() {
   currentQuizIndex++;
-  console.log("nextQuestionFromExplanationが呼び出されました。新しいcurrentQuizIndex: " + currentQuizIndex);
   if (currentQuizIndex < quizData.length) {
-    console.log("次の問題があります。quizScreenを表示します。");
     explanationScreen.style.display = 'none';
     showQuiz();
   } else {
-    console.log("次の問題がありません。結果画面を表示します。");
     showResult();
   }
 }
