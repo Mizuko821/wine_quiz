@@ -91,6 +91,11 @@ select:hover {
     margin-bottom: 1.5rem;
 }
 
+#quiz-question-area {
+    position: relative; /* 子要素の絶対位置指定の基準にする */
+    margin-bottom: 1.5rem; /* #choicesの既存マージンをここに移動 */
+}
+
 .choice-button {
     background: var(--wine-dark);
     border: 2px solid var(--wine-dark);
@@ -122,58 +127,155 @@ select:hover {
     box-shadow: none;
 }
 
-#feedback {
+#feedback-container {
     text-align: center;
-    margin: 1rem 0;
-    font-size: 1.2rem;
-    font-weight: 500;
     min-height: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+#feedback-icon {
+    font-size: 4rem;
+    line-height: 1;
+    animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#feedback-icon.correct {
+    color: #2E7D32;
+}
+
+#feedback-icon.incorrect {
+    color: #C62828;
+}
+
+#feedback {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--wine-dark);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    70% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 解説画面のスタイル */
+#explanation-content {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+}
+
+#explanation-question {
+    font-size: 1.3rem;
+    color: var(--wine-dark);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+#explanation-answer {
+    font-size: 1.2rem;
+    color: var(--wine-red);
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-left: 4px solid var(--wine-red);
+    background: rgba(141, 29, 44, 0.1);
+}
+
+#explanation-text {
+    font-size: 1.1rem;
+    color: var(--wine-dark);
+    line-height: 1.8;
+    white-space: pre-line;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* クイズ画面のボタンコンテナ */
 .quiz-control-buttons {
     display: flex;
-    justify-content: space-between; /* 両端に配置するように変更 */
+    justify-content: space-between;
     align-items: center;
     margin-top: 1.5rem;
     gap: 1rem;
     flex-wrap: wrap;
-    height: 55px;
+    min-height: 55px;
 }
 
 .quiz-action-buttons {
     position: relative;
+    flex: 1;
     min-width: 0;
-    width: calc(50% - 0.5rem);
-    height: 100%;
-    order: 2; /* スキップボタンを右側に配置 */
+    height: 55px;
+    order: 2;
 }
 
 #back-to-start {
-    order: 1; /* スタートに戻るボタンを左側に配置 */
+    flex: 1;
+    min-width: 0;
+    height: 55px;
+    order: 1;
 }
 
 .quiz-action-buttons button {
-    position: absolute; /* 子要素を絶対配置に設定 */
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100%; /* 親の幅に合わせる */
-    height: 100%; /* 親の高さに合わせる */
-    margin: 0; /* 個別のマージンは0にする */
-    display: flex; /* テキストを中央揃えにするため */
-    justify-content: center; /* 水平方向の中央揃え */
-    align-items: center; /* 垂直方向の中央揃え */
-    transform: none; /* 以前のtransformを解除 */
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: none;
 }
 
 /* 共通のボタン基本スタイル */
 button {
     color: white;
-    padding: 1rem 2rem;
+    padding: 1rem 2rem; /* パディングは維持 */
     border-radius: 8px;
     cursor: pointer;
     font-size: 1.1rem;
     transition: all 0.3s ease;
+    box-sizing: border-box;
+    height: auto; /* 高さを自動調整 */
+    line-height: normal; /* 行の高さをリセット */
+    display: flex; /* テキストの垂直方向中央揃えのため */
+    justify-content: center;
+    align-items: center;
 }
 
 /* スタートボタンのスタイル */
@@ -184,25 +286,24 @@ button {
 }
 
 /* スタートに戻るボタンのスタイル */
-#back-to-start, #restart-button {
-    background: #aaaaaa;
-    border: 2px solid #aaaaaa;
-    margin: 0; /* 親のflexboxでレイアウトするためマージンを0に */
-    min-width: 0; /* Flexアイテムとして柔軟に縮小できるようにする */
-    width: calc(50% - 0.5rem); /* 親の幅の半分からgapの半分を引く */
-    display: flex; /* テキスト中央揃えのため追加 */
-    justify-content: center; /* テキスト水平方向中央揃えのため追加 */
-    align-items: center; /* テキスト垂直方向中央揃えのため追加 */
+#back-to-start, #restart-button, #explanation-back-to-start {
+    background: #777777;
+    border: 2px solid #777777;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1; /* 利用可能なスペースを均等に占める */
 }
 
-#back-to-start:hover, #restart-button:hover {
-    background: #666666;
-    border-color: #666666;
+#back-to-start:hover, #restart-button:hover, #explanation-back-to-start:hover {
+    background: #444444;
+    border-color: #444444;
     transform: translateY(-2px);
 }
 
 /* 通常のボタン（次の問題へ、クイズスタート） */
-button:not(#back-to-start):not(#restart-button):not(#skip-button) {
+button:not(#back-to-start):not(#restart-button):not(#skip-button):not(#explanation-back-to-start):not(#next-button) {
     background: var(--wine-red);
     border: 2px solid var(--wine-red);
 }
@@ -213,14 +314,28 @@ button:not(#back-to-start):not(#restart-button):not(#skip-button):hover {
     transform: translateY(-2px);
 }
 
+/* 次の問題へ/解説へボタン */
+#next-button, #explanation-next-button {
+    background: var(--wine-red);
+    border: 2px solid var(--wine-red);
+    color: white;
+    flex: 1; /* 利用可能なスペースを均等に占める */
+}
+
+#next-button:hover, #explanation-next-button:hover {
+    background: var(--wine-dark);
+    border-color: var(--wine-dark);
+    transform: translateY(-2px);
+}
+
 #skip-button {
-    background: #ffa500; /* スキップボタンの色（オレンジ） */
+    background: #ffa500;
     border: 2px solid #ffa500;
     color: white;
 }
 
 #skip-button:hover {
-    background: #cc8400; /* ホバー時の色を少し濃く */
+    background: #cc8400;
     border-color: #cc8400;
     transform: translateY(-2px);
 }
@@ -285,18 +400,22 @@ button:disabled {
     /* スマホでのボタンの配置を調整 */
     .quiz-control-buttons {
         flex-direction: column;
-        align-items: stretch;
-        height: auto;
-        justify-content: center;
+        gap: 0.8rem;
     }
 
-    .quiz-action-buttons {
+    .quiz-action-buttons,
+    #back-to-start {
         width: 100%;
-        min-width: unset;
-        height: 55px;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
+        height: 50px;
+    }
+
+    /* 解説画面のボタンコンテナは横並びにする */
+    #explanation-screen .quiz-control-buttons {
+        flex-direction: row; /* 横並びにする */
+        flex-wrap: wrap; /* 必要に応じて折り返す */
+        justify-content: space-between; /* 両端に配置 */
+        gap: 1rem; /* ボタン間のギャップ */
+        width: 100%; /* 明示的に幅を100%に設定 */
     }
 
     .quiz-action-buttons button {
@@ -322,9 +441,39 @@ button:disabled {
         order: 1;
     }
 
+    /* 解説画面のボタンは50%幅で横並び */
+    #explanation-next-button,
+    #explanation-back-to-start {
+        /* width: calc(50% - 0.5rem); */ /* 幅はflex-basisで指定 */
+        /* margin: 0; */ /* マージンはgapで制御 */
+        flex-grow: 0; /* 伸びない */
+        flex-shrink: 0; /* 縮まない */
+        flex-basis: calc(50% - 0.5rem); /* この幅を基準にする */
+    }
+
     /* 結果画面のボタンもモバイル対応 */
     #restart-button {
         width: 100%;
         margin: 1rem 0;
+    }
+
+    #feedback-icon {
+        font-size: 3rem;
+    }
+
+    #explanation-content {
+        padding: 1rem;
+    }
+
+    #explanation-question {
+        font-size: 1.2rem;
+    }
+
+    #explanation-answer {
+        font-size: 1.1rem;
+    }
+
+    #explanation-text {
+        font-size: 1rem;
     }
 } 
